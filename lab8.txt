@@ -1,0 +1,26 @@
+import pandas as pd
+import numpy as np
+from sklearn import neighbors
+from sklearn.model_selection import train_test_split
+
+df=pd.read_csv("8-KNN-input.csv")
+# print(df)
+
+X=np.array(df[df.columns[:-1]])
+Y=np.array(df[df.columns[-1]])
+
+X_train,X_test,Y_train,Y_test = train_test_split(X,Y,test_size=0.8)
+
+# Define the classifier using panda library
+clf=neighbors.KNeighborsClassifier()
+
+# Save the model with the fit method
+clf.fit(X_train,Y_train)
+
+prediction = clf.predict(X_test)
+for i in range(len(X_test)):
+    print('actual:',repr(Y_test[i]),',prediction:', repr(prediction[i]))
+    
+# use the test set and calculate the accuracy of the model
+accuracy=clf.score(X_test, Y_test)
+print('accuracy =', accuracy)
